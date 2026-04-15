@@ -1,5 +1,5 @@
 import { LoggerProtocol } from "../../../application/protocols";
-import { PinoLoggerAdapter } from "../../../infra/adapters/pino.logger.adapter";
+import { LogLevelLoggerAdapter } from "../../../infra/adapters/log-level.logger.adapter";
 
 let globalLoggerInstance: LoggerProtocol | null = null;
 
@@ -9,20 +9,7 @@ let globalLoggerInstance: LoggerProtocol | null = null;
  */
 export const makeGlobalLogger = (): LoggerProtocol => {
   if (!globalLoggerInstance) {
-    globalLoggerInstance = new PinoLoggerAdapter({
-      level: Bun.env.LOG_LEVEL || "info",
-      transport:
-        Bun.env.NODE_ENV === "development" && Bun.env.LOG_PRETTY === "true"
-          ? {
-              target: "pino-pretty",
-              options: {
-                colorize: true,
-                translateTime: "SYS:standard",
-                ignore: "pid,hostname",
-              },
-            }
-          : undefined,
-    });
+    globalLoggerInstance = new LogLevelLoggerAdapter();
   }
 
   return globalLoggerInstance;

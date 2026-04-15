@@ -1,8 +1,8 @@
-import { MilitaryRankInputDTO } from "../../domain/dtos";
-import { MilitaryRankRepository } from "../../domain/repositories";
-import { DuplicatedKeyError } from "../errors";
-import { MilitaryRankInputDTOValidatorProtocol } from "../protocols";
-import { ValidationPatterns } from "./common";
+import { MilitaryRankInputDTO } from "../../../domain/dtos";
+import { MilitaryRankRepository } from "../../../domain/repositories";
+import { DuplicatedKeyError } from "../../errors";
+import { MilitaryRankInputDTOValidatorProtocol } from "../../protocols";
+import { ValidationPatterns } from "../common";
 
 interface MilitaryRankInputDTOValidatorProps {
   militaryRankRepository: MilitaryRankRepository;
