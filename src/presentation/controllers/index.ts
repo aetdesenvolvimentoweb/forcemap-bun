@@ -1,2 +1,3 @@
 export * from "./base.controller";
 export * from "./military-rank";
+export * from "./military";
