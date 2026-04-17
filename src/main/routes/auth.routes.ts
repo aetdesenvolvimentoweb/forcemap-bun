@@ -2,16 +2,16 @@ import { Hono } from "hono";
 
 import { honoRouteAdapter } from "../../infra/adapters";
 
-import { makeGlobalLogger } from "../factories/logger";
-import {
-  makeHonoAuthMiddleware,
-  makeHonoSeedMiddleware,
-} from "../factories/middlewares";
 import {
   makeLoginController,
   makeLogoutController,
   makeRefreshTokenController,
 } from "../factories/controllers";
+import { makeGlobalLogger } from "../factories/logger";
+import {
+  makeHonoAuthMiddleware,
+  makeHonoSeedMiddleware,
+} from "../factories/middlewares";
 
 const authRoutes = new Hono();
 

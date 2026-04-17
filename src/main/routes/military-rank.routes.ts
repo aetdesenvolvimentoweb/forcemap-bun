@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { honoRouteAdapter } from "../../infra/adapters";
 import {
   makeCreateMilitaryRankController,
   makeDeleteMilitaryRankController,
@@ -7,7 +8,6 @@ import {
   makeUpdateMilitaryRankController,
 } from "../factories/controllers";
 import { makeGlobalLogger } from "../factories/logger";
-import { honoRouteAdapter } from "../../infra/adapters";
 import { makeHonoAuthMiddleware } from "../factories/middlewares";
 
 const militaryRankRoutes = new Hono();

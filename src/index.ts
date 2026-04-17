@@ -1,7 +1,7 @@
 import { logger } from "hono/logger";
-import app from "./main/server";
 import { makeGlobalLogger } from "./main/factories/logger";
 import routes from "./main/routes";
+import app from "./main/server";
 
 const appLogger = makeGlobalLogger();
 

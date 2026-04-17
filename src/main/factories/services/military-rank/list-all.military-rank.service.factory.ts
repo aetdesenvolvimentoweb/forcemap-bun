@@ -1,5 +1,5 @@
 import { ListAllMilitaryRankService } from "../../../../application/services";
-import { GenericServiceFactory } from "../../common/generic-service.factory";
+import { GenericServiceFactory } from "../../common";
 import { makeMilitaryRankRepository } from "../../repositories";
 
 export const makeListAllMilitaryRankService =

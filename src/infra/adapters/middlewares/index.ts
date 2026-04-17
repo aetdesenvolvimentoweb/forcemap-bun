@@ -1,5 +1,5 @@
-export * from "./hono-security-logger.middleware";
 export * from "./hono-auth.middleware";
-export * from "./hono-security.middleware";
 export * from "./hono-cors.middleware";
+export * from "./hono-security-logger.middleware";
+export * from "./hono-security.middleware";
 export * from "./hono-seed.middleware";

@@ -1,9 +1,11 @@
 import { DatabaseSeed } from "../../seed";
-import { makePasswordHasher } from "../hasher/password.hasher.factory";
-import { makeGlobalLogger } from "../logger/global-logger.factory";
-import { makeMilitaryRepository } from "../repositories/military.repository.factory";
-import { makeMilitaryRankRepository } from "../repositories/military-rank.repository.factory";
-import { makeUserRepository } from "../repositories/user.repository.factory";
+import { makePasswordHasher } from "../hasher";
+import { makeGlobalLogger } from "../logger";
+import {
+  makeMilitaryRankRepository,
+  makeMilitaryRepository,
+  makeUserRepository,
+} from "../repositories";
 
 export const makeDatabaseSeed = (): DatabaseSeed => {
   const militaryRankRepository = makeMilitaryRankRepository();

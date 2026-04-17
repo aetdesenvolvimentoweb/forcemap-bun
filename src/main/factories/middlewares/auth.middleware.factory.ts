@@ -1,4 +1,4 @@
-import { AuthMiddleware } from "../../../presentation/middlewares/auth.middleware";
+import { AuthMiddleware } from "../../../presentation/middlewares";
 import { makeLogger } from "../logger";
 import { makeSessionRepository } from "../repositories";
 import { makeTokenValidator } from "../validators/auth";

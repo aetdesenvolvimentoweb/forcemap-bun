@@ -1,5 +1,5 @@
 import { DeleteMilitaryRankService } from "../../../../application/services";
-import { GenericServiceFactory } from "../../common/generic-service.factory";
+import { GenericServiceFactory } from "../../common";
 import {
   makeMilitaryRankRepository,
   makeMilitaryRepository,
@@ -8,8 +8,8 @@ import { makeIdSanitizer } from "../../sanitizers";
 import {
   makeIdValidator,
   makeMilitaryRankIdRegisteredValidator,
+  makeMilitaryRankInUseValidator,
 } from "../../validators";
-import { makeMilitaryRankInUseValidator } from "../../validators/military-rank/military-rank.in-use.validator.factory";
 
 export const makeDeleteMilitaryRankService = (): DeleteMilitaryRankService => {
   const militaryRankRepository = makeMilitaryRankRepository();

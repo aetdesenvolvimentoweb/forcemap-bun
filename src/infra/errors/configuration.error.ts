@@ -1,4 +1,4 @@
-import { AppError } from "../../domain/errors/app.error";
+import { AppError } from "../../domain/errors";
 
 export class ConfigurationError extends AppError {
   constructor(message: string) {

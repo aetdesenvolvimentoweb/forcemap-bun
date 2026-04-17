@@ -1,7 +1,7 @@
-import { AuthenticateUserController } from "../../../../presentation/controllers/user/authenticate.user.controller";
+import { AuthenticateUserController } from "../../../../presentation/controllers";
 import { ControllerProtocol } from "../../../../presentation/protocols";
 import { makeLogger } from "../../logger";
-import { makeAuthenticateUserService } from "../../services/user/authenticate.user.service.factory";
+import { makeAuthenticateUserService } from "../../services";
 
 export const makeAuthenticateUserController = (): ControllerProtocol => {
   const logger = makeLogger();

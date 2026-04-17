@@ -4,9 +4,9 @@ import {
 } from "../../application/protocols";
 import {
   LogLevelSecurityLogger,
-  SecurityEventType,
   SecurityEventSeverity,
-} from "./middlewares/hono-security-logger.middleware";
+  SecurityEventType,
+} from "./middlewares";
 
 /**
  * Adapter que implementa SecurityLoggerProtocol usando LogLevelSecurityLogger.

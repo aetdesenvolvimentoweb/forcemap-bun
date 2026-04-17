@@ -1,9 +1,9 @@
 import { Hono } from "hono";
+import authRoutes from "./auth.routes";
 import healthDocs from "./health-docs.routes";
 import militaryRankRoutes from "./military-rank.routes";
 import militaryRoutes from "./military.routes";
 import userRoutes from "./user.routes";
-import authRoutes from "./auth.routes";
 
 const routes = new Hono();
 

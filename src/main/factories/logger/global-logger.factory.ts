@@ -1,5 +1,5 @@
 import { LoggerProtocol } from "../../../application/protocols";
-import { LogLevelLoggerAdapter } from "../../../infra/adapters/log-level.logger.adapter";
+import { LogLevelLoggerAdapter } from "../../../infra/adapters";
 
 let globalLoggerInstance: LoggerProtocol | null = null;
 
