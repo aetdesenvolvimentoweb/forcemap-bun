@@ -4,3 +4,4 @@ export * from "./sanitizers";
 export * from "./security.logger.protocol";
 export * from "./token.handler.protocol";
 export * from "./validators";
+export * from "./rate-limiter.protocol";

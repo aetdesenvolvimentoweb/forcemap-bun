@@ -38,7 +38,7 @@ export class MilitaryInputDTOValidator implements MilitaryInputDTOValidatorProto
 
     ValidationPatterns.validateStringFormat(
       name,
-      /^[a-zA-Z]+$/,
+      /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/,
       "Nome",
       "deve conter apenas letras, acentos e/ou espaços",
     );

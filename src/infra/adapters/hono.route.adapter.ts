@@ -32,10 +32,10 @@ export const honoRouteAdapter = (
 
       const httpResponse: HttpResponse = await controller.handle(httpRequest);
 
-      const response = c.json(
-        httpResponse.body ?? {},
-        httpResponse.statusCode as any,
-      );
+      const nullBodyStatuses = [101, 204, 205, 304];
+      const response = nullBodyStatuses.includes(httpResponse.statusCode)
+        ? c.body(null, httpResponse.statusCode as any)
+        : c.json(httpResponse.body ?? {}, httpResponse.statusCode as any);
 
       if (httpResponse.headers && typeof httpResponse.headers === "object") {
         Object.entries(httpResponse.headers as Record<string, unknown>).forEach(

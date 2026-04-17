@@ -34,7 +34,7 @@ export class CloudflareWorkerJwtHandlerAdapter implements TokenHandlerProtocol {
     }
 
     // Validação de tamanho mínimo em produção
-    const nodeEnv = (globalThis as any).process?.env?.NODE_ENV || "development";
+    const nodeEnv = (globalThis as any).process?.env?.BUN_ENV || "development";
     if (nodeEnv === "production") {
       if (accessTokenSecret.length < 32) {
         throw new ConfigurationError(

@@ -1,6 +1,6 @@
-import { webcrypto } from "crypto";
-
 import { PasswordHasherProtocol } from "../../application/protocols";
+
+const webcrypto = globalThis.crypto;
 
 export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
   constructor(private readonly iterations: number = 100000) {}
@@ -13,7 +13,7 @@ export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
       encoder.encode(plainPassword),
       "PBKDF2",
       false,
-      ["deriveBits"]
+      ["deriveBits"],
     );
     const derivedKey = await webcrypto.subtle.deriveBits(
       {
@@ -23,7 +23,7 @@ export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
         hash: "SHA-256",
       },
       keyMaterial,
-      256
+      256,
     );
     const hash = new Uint8Array(derivedKey);
     return `${btoa(String.fromCharCode(...salt))}:${btoa(String.fromCharCode(...hash))}`;
@@ -35,8 +35,16 @@ export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
   ): Promise<boolean> {
     const [saltB64, hashB64] = hashedPassword.split(":");
     if (!saltB64 || !hashB64) return false;
-    const salt = new Uint8Array(atob(saltB64).split("").map(c => c.charCodeAt(0)));
-    const storedHash = new Uint8Array(atob(hashB64).split("").map(c => c.charCodeAt(0)));
+    const salt = new Uint8Array(
+      atob(saltB64)
+        .split("")
+        .map((c) => c.charCodeAt(0)),
+    );
+    const storedHash = new Uint8Array(
+      atob(hashB64)
+        .split("")
+        .map((c) => c.charCodeAt(0)),
+    );
 
     const encoder = new TextEncoder();
     const keyMaterial = await webcrypto.subtle.importKey(
@@ -44,7 +52,7 @@ export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
       encoder.encode(plainPassword),
       "PBKDF2",
       false,
-      ["deriveBits"]
+      ["deriveBits"],
     );
     const derivedKey = await webcrypto.subtle.deriveBits(
       {
@@ -54,11 +62,13 @@ export class WebCryptoPasswordHasherAdapter implements PasswordHasherProtocol {
         hash: "SHA-256",
       },
       keyMaterial,
-      256
+      256,
     );
     const computedHash = new Uint8Array(derivedKey);
 
-    return computedHash.length === storedHash.length &&
-           computedHash.every((byte, i) => byte === storedHash[i]);
+    return (
+      computedHash.length === storedHash.length &&
+      computedHash.every((byte, i) => byte === storedHash[i])
+    );
   }
 }

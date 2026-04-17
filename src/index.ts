@@ -1,15 +1,13 @@
-import { Hono } from "hono";
 import { logger } from "hono/logger";
-import routes from "./main/routes";
+import app from "./main/server";
 import { makeGlobalLogger } from "./main/factories/logger";
+import routes from "./main/routes";
 
-const app = new Hono();
 const appLogger = makeGlobalLogger();
 
+app.route("/api/v1", routes);
 app.use(logger());
 
 appLogger.info("Aplicação iniciada");
-
-app.route("/api/v1", routes);
 
 export default app;
