@@ -8,10 +8,10 @@ import userRoutes from "./user.routes";
 const routes = new Hono();
 
 routes.route("/", healthDocs);
-routes.route("/", authRoutes);
-routes.route("/military", militaryRoutes);
-routes.route("/military-rank", militaryRankRoutes);
-routes.route("/user", userRoutes);
+routes.route("/api/v1", authRoutes);
+routes.route("/api/v1/military", militaryRoutes);
+routes.route("/api/v1/military-rank", militaryRankRoutes);
+routes.route("/api/v1/user", userRoutes);
 
 routes.notFound((c) => {
   return c.json({ error: "Not Found" }, 404);

@@ -286,9 +286,7 @@ export const cors = (config: CorsConfig = {}, logger: LoggerProtocol) => {
       // Trata requisições OPTIONS (preflight)
       if (requestMethod === "OPTIONS") {
         if (!finalConfig.preflightContinue) {
-          response = new Response("", {
-            status: finalConfig.optionsSuccessStatus || 204,
-          });
+          response = c.body(null, (finalConfig.optionsSuccessStatus || 204) as 200 | 204);
           return;
         }
       }
