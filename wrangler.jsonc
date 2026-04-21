@@ -8,7 +8,7 @@
   },
   "vars": {
     "LOG_PRETTY": "true",
-    "BUN_ENV": "development",
+    "BUN_ENV": "production",
     // Em produção, defina via Dashboard do Cloudflare (Secrets):
     // CORS_ALLOWED_ORIGINS_PROD=https://forcemap-web.pages.dev
   },
