@@ -24,7 +24,7 @@ export class MilitaryRankInputDTOValidator implements MilitaryRankInputDTOValida
   private readonly validateAbbreviationFormat = (
     abbreviation: string,
   ): void => {
-    ValidationPatterns.validateStringLength(abbreviation, 10, "Abreviatura");
+    ValidationPatterns.validateStringLength(abbreviation, 15, "Abreviatura");
 
     ValidationPatterns.validateStringFormat(
       abbreviation,
