@@ -3,6 +3,7 @@ import { Hono } from "hono";
 import { securityHeadersDev, securityHeadersProd } from "../infra/adapters";
 import {
   makeHonoCorsMiddleware,
+  makeHonoInternalSecretMiddleware,
   makeHonoSecurityLoggingMiddleware,
   makeHonoSeedMiddleware,
 } from "./factories/middlewares";
@@ -22,6 +23,12 @@ app.use("*", async (c, next) => {
   const env = (c.env as Record<string, string | undefined>) ?? {};
   const { corsAuto } = makeHonoCorsMiddleware(env);
   return corsAuto()(c, next);
+});
+
+// Middleware de segredo interno - rejeita requests sem X-Internal-Secret válido
+app.use("*", async (c, next) => {
+  const env = (c.env as Record<string, string | undefined>) ?? {};
+  return makeHonoInternalSecretMiddleware(env)(c, next);
 });
 
 // Middleware de segurança - aplica headers de segurança
