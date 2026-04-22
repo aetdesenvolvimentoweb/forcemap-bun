@@ -18,17 +18,17 @@ const seedMiddleware = makeHonoSeedMiddleware();
 // Middleware de seed - inicializa banco de dados se necessário
 app.use("*", seedMiddleware);
 
-// Middleware de CORS - deve vir antes de outros middlewares
+// Middleware de segredo interno - roda antes do CORS para fazer bypass quando válido
+app.use("*", async (c, next) => {
+  const env = (c.env as Record<string, string | undefined>) ?? {};
+  return makeHonoInternalSecretMiddleware(env)(c, next);
+});
+
+// Middleware de CORS - bypassa validação de origin quando bypassCors está definido
 app.use("*", async (c, next) => {
   const env = (c.env as Record<string, string | undefined>) ?? {};
   const { corsAuto } = makeHonoCorsMiddleware(env);
   return corsAuto()(c, next);
-});
-
-// Middleware de segredo interno - rejeita requests sem X-Internal-Secret válido
-app.use("*", async (c, next) => {
-  const env = (c.env as Record<string, string | undefined>) ?? {};
-  return makeHonoInternalSecretMiddleware(env)(c, next);
 });
 
 // Middleware de segurança - aplica headers de segurança

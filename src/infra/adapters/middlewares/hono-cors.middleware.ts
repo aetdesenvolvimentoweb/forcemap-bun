@@ -210,6 +210,12 @@ export const cors = (config: CorsConfig = {}, logger: LoggerProtocol) => {
   const finalConfig = { ...defaultCorsConfig, ...config };
 
   return async (c: Context, next: Next) => {
+    // Requests autenticados via X-Internal-Secret não precisam de validação de origin
+    if (c.get("bypassCors") === true) {
+      await next();
+      return c.res;
+    }
+
     const origin = c.req.header("Origin") ?? undefined;
     const requestMethod = c.req.method.toUpperCase();
     const ip =
