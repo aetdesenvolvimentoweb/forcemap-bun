@@ -20,4 +20,4 @@ Pass the `CloudflareBindings` as generics when instantiation `Hono`:
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 ```
 
-teste
+API_SECRET=testandoaapi
