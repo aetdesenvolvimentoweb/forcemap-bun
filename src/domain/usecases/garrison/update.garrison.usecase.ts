@@ -1,5 +1,5 @@
-import { MilitaryInputDTO } from "../../dtos";
+import { GarrisonInputDTO } from "../../dtos";
 
-export interface UpdateMilitaryUseCase {
-  update(id: string, data: MilitaryInputDTO): Promise<void>;
+export interface UpdateGarrisonUseCase {
+  update(id: string, data: GarrisonInputDTO): Promise<void>;
 }
