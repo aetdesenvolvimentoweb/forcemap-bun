@@ -4,3 +4,4 @@ export * from "./military.input.dto.sanitizer.protocol";
 export * from "./officer.input.dto.sanitizer.protocol";
 export * from "./user";
 export * from "./vehicle.input.dto.sanitizer.protocol";
+export * from "./garrison.input.dto.sanitizer.protocol";
