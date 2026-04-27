@@ -1,4 +1,4 @@
-import { VehicleSituation } from "../entities";
+import { VehicleSituation } from "../enums";
 
 export type VehicleInputDTO = {
   name: string;

@@ -53,4 +53,17 @@ export class ValidationPatterns {
       throw new InvalidParamError(fieldName, `deve ser menor que ${max}`);
     }
   }
+
+  static validateEnum<T extends object>(
+    value: unknown,
+    enumObj: T,
+    fieldName: string,
+  ): void {
+    if (!Object.values(enumObj).includes(value)) {
+      throw new InvalidParamError(
+        fieldName,
+        `deve ser um dos valores: ${Object.values(enumObj).join(", ")}`,
+      );
+    }
+  }
 }

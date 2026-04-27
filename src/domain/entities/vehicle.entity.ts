@@ -1,7 +1,4 @@
-export enum VehicleSituation {
-  BAIXADA = "baixada",
-  ATIVA = "ativa",
-}
+import { VehicleSituation } from "../enums";
 
 export type Vehicle = {
   id: string;
