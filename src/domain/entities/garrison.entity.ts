@@ -1,14 +1,4 @@
-export enum WorkPeriod {
-  Diurno = "Diurno",
-  Noturno = "Noturno",
-  Integral = "Integral",
-}
-
-export enum WorkSchedule {
-  Ordinario = "Ordinário",
-  AC4OBM = "AC4 - OBM",
-  AC4Prefeitura = "Prefeitura",
-}
+import { WorkPeriod, WorkSchedule } from "../enums";
 
 export type MilitaryInGarrison = {
   militaryId: string;

@@ -1,5 +1,5 @@
 import { VehicleInputDTO } from "../../../domain/dtos";
-import { VehicleSituation } from "../../../domain/entities";
+import { VehicleSituation } from "../../../domain/enums";
 import { VehicleRepository } from "../../../domain/repositories";
 import { DuplicatedKeyError } from "../../errors";
 import { VehicleInputDTOValidatorProtocol } from "../../protocols";
