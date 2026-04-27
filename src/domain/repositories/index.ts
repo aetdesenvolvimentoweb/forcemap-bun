@@ -4,3 +4,4 @@ export * from "./session.repository";
 export * from "./user";
 export * from "./user.repository";
 export * from "./vehicle.repository";
+export * from "./garrison.repository";
