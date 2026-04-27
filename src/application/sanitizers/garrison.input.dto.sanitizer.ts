@@ -1,8 +1,8 @@
 import { GarrisonInputDTO } from "../../domain/dtos";
-import { WorkPeriod, WorkSchedule } from "../../domain/entities";
+import { WorkPeriod, WorkSchedule } from "../../domain/enums";
 import {
-  IdSanitizerProtocol,
   GarrisonInputDTOSanitizerProtocol,
+  IdSanitizerProtocol,
 } from "../protocols";
 import { sanitizeString } from "../utils";
 
