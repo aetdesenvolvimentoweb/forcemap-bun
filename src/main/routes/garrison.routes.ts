@@ -2,48 +2,48 @@ import { Hono } from "hono";
 
 import { honoRouteAdapter } from "../../infra/adapters";
 import {
-  makeCreateOfficerController,
-  makeDeleteOfficerController,
-  makeFindByIdOfficerController,
-  makeListAllOfficerController,
-  makeUpdateOfficerController,
+  makeCreateGarrisonController,
+  makeDeleteGarrisonController,
+  makeFindByIdGarrisonController,
+  makeListAllGarrisonController,
+  makeUpdateGarrisonController,
 } from "../factories/controllers";
 import { makeGlobalLogger } from "../factories/logger";
 import { makeHonoAuthMiddleware } from "../factories/middlewares";
 
-const officerRoutes = new Hono();
+const garrisonRoutes = new Hono();
 const { requireAuthWithRoles } = makeHonoAuthMiddleware();
 const logger = makeGlobalLogger();
 
 // Operações de consulta - ADMIN e CHEFE
-officerRoutes.post(
+garrisonRoutes.post(
   "/",
   requireAuthWithRoles(["Admin", "Chefe", "ACA"]),
-  honoRouteAdapter(makeCreateOfficerController(), logger),
+  honoRouteAdapter(makeCreateGarrisonController(), logger),
 );
 
-officerRoutes.delete(
+garrisonRoutes.delete(
   "/:id",
   requireAuthWithRoles(["Admin", "Chefe", "ACA"]),
-  honoRouteAdapter(makeDeleteOfficerController(), logger),
+  honoRouteAdapter(makeDeleteGarrisonController(), logger),
 );
 
-officerRoutes.put(
+garrisonRoutes.put(
   "/:id",
   requireAuthWithRoles(["Admin", "Chefe", "ACA"]),
-  honoRouteAdapter(makeUpdateOfficerController(), logger),
+  honoRouteAdapter(makeUpdateGarrisonController(), logger),
 );
 
-officerRoutes.get(
+garrisonRoutes.get(
   "/",
   requireAuthWithRoles(["Admin", "Chefe", "ACA"]),
-  honoRouteAdapter(makeListAllOfficerController(), logger),
+  honoRouteAdapter(makeListAllGarrisonController(), logger),
 );
 
-officerRoutes.get(
+garrisonRoutes.get(
   "/:id",
   requireAuthWithRoles(["Admin", "Chefe", "ACA"]),
-  honoRouteAdapter(makeFindByIdOfficerController(), logger),
+  honoRouteAdapter(makeFindByIdGarrisonController(), logger),
 );
 
-export default officerRoutes;
+export default garrisonRoutes;

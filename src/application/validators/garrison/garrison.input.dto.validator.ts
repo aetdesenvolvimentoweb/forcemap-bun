@@ -1,10 +1,15 @@
 import { GarrisonInputDTO } from "../../../domain/dtos";
-import { MilitaryInGarrison, WorkPeriod } from "../../../domain/entities";
+import { MilitaryInGarrison } from "../../../domain/entities";
+import { WorkPeriod, WorkSchedule } from "../../../domain/enums";
 import {
   MilitaryRepository,
   VehicleRepository,
 } from "../../../domain/repositories";
-import { EntityNotFoundError, InvalidParamError, MissingParamError } from "../../errors";
+import {
+  EntityNotFoundError,
+  InvalidParamError,
+  MissingParamError,
+} from "../../errors";
 import {
   GarrisonInputDTOValidatorProtocol,
   IdValidatorProtocol,
@@ -32,13 +37,48 @@ export class GarrisonInputDTOValidator implements GarrisonInputDTOValidatorProto
     }
   };
 
-  private readonly validateSchedulesPresence = (
+  private readonly validateWorkPeriodPresence = (
     militaryInGarrison: MilitaryInGarrison[],
   ): void => {
     militaryInGarrison.forEach((item, index) => {
       ValidationPatterns.validatePresence(
-        item.schedule,
-        `Regime de trabalho do militar ${index + 1}`,
+        item.workPeriod,
+        `Período de trabalho do militar ${index + 1} da guarnição`,
+      );
+    });
+  };
+
+  private readonly validateWorkSchedulePresence = (
+    militaryInGarrison: MilitaryInGarrison[],
+  ): void => {
+    militaryInGarrison.forEach((item, index) => {
+      ValidationPatterns.validatePresence(
+        item.workSchedule,
+        `Regime de trabalho do militar ${index + 1} da guarnição`,
+      );
+    });
+  };
+
+  private readonly validateWorkPeriodFormat = (
+    militaryInGarrison: MilitaryInGarrison[],
+  ): void => {
+    militaryInGarrison.forEach((item, index) => {
+      ValidationPatterns.validateEnum(
+        item.workPeriod,
+        WorkPeriod,
+        `Período de trabalho do militar ${index + 1} da guarnição`,
+      );
+    });
+  };
+
+  private readonly validateWorkScheduleFormat = (
+    militaryInGarrison: MilitaryInGarrison[],
+  ): void => {
+    militaryInGarrison.forEach((item, index) => {
+      ValidationPatterns.validateEnum(
+        item.workSchedule,
+        WorkSchedule,
+        `Regime de trabalho do militar ${index + 1} da guarnição`,
       );
     });
   };
@@ -47,20 +87,24 @@ export class GarrisonInputDTOValidator implements GarrisonInputDTOValidatorProto
     militaryInGarrison: MilitaryInGarrison[],
   ): void => {
     if (militaryInGarrison.length === 1) {
-      if (militaryInGarrison[0].period !== WorkPeriod.Integral) {
+      if (militaryInGarrison[0].workPeriod !== WorkPeriod.Integral) {
         throw new InvalidParamError(
           "Período de Trabalho",
-          "com apenas um militar, o período deve ser Integral",
+          "com apenas um militar na guarnição, o período deve ser Integral",
         );
       }
       return;
     }
 
     const hasDiurno = militaryInGarrison.some(
-      (m) => m.period === WorkPeriod.Diurno || m.period === WorkPeriod.Integral,
+      (m) =>
+        m.workPeriod === WorkPeriod.Diurno ||
+        m.workPeriod === WorkPeriod.Integral,
     );
     const hasNoturno = militaryInGarrison.some(
-      (m) => m.period === WorkPeriod.Noturno || m.period === WorkPeriod.Integral,
+      (m) =>
+        m.workPeriod === WorkPeriod.Noturno ||
+        m.workPeriod === WorkPeriod.Integral,
     );
 
     if (!hasDiurno || !hasNoturno) {
@@ -74,7 +118,8 @@ export class GarrisonInputDTOValidator implements GarrisonInputDTOValidatorProto
   private readonly validateRequiredFields = (data: GarrisonInputDTO): void => {
     this.validateVehicleIdPresence(data.vehicleId);
     this.validateMilitaryInGarrisonPresence(data.militaryInGarrison);
-    this.validateSchedulesPresence(data.militaryInGarrison);
+    this.validateWorkPeriodPresence(data.militaryInGarrison);
+    this.validateWorkSchedulePresence(data.militaryInGarrison);
   };
 
   private readonly validateBusinessRules = async (
@@ -102,6 +147,8 @@ export class GarrisonInputDTOValidator implements GarrisonInputDTOValidatorProto
       throw new EntityNotFoundError("Militar");
     }
 
+    this.validateWorkPeriodFormat(data.militaryInGarrison);
+    this.validateWorkScheduleFormat(data.militaryInGarrison);
     this.validateWorkPeriodCombination(data.militaryInGarrison);
   };
 

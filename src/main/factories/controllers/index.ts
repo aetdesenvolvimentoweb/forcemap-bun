@@ -1,4 +1,5 @@
 export * from "./auth";
+export * from "./garrison";
 export * from "./military";
 export * from "./military-rank";
 export * from "./officer";

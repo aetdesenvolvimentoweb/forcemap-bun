@@ -18,8 +18,8 @@ export class GarrisonInputDTOSanitizer implements GarrisonInputDTOSanitizerProto
       vehicleId: this.props.idSanitizer.sanitize(data.vehicleId),
       militaryInGarrison: data.militaryInGarrison.map((item) => ({
         militaryId: this.props.idSanitizer.sanitize(item.militaryId),
-        period: sanitizeString(item.period) as WorkPeriod,
-        schedule: sanitizeString(item.schedule) as WorkSchedule,
+        workPeriod: sanitizeString(item.workPeriod) as WorkPeriod,
+        workSchedule: sanitizeString(item.workSchedule) as WorkSchedule,
       })),
     };
     return sanitized;

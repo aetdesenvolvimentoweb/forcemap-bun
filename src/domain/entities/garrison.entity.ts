@@ -1,9 +1,11 @@
 import { WorkPeriod, WorkSchedule } from "../enums";
+import { Military } from "./military.entity";
 
 export type MilitaryInGarrison = {
   militaryId: string;
-  period: WorkPeriod;
-  schedule: WorkSchedule;
+  military?: Military;
+  workPeriod: WorkPeriod;
+  workSchedule: WorkSchedule;
 };
 
 export type Garrison = {

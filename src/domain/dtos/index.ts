@@ -1,5 +1,5 @@
 export * from "./auth";
-export * from "./garrison.input.dto";
+export * from "./garrison";
 export * from "./military";
 export * from "./military-rank.input.dto";
 export * from "./officer";

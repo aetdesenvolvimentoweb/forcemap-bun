@@ -1,5 +1,5 @@
-import { Garrison } from "../../entities";
+import { GarrisonOutputDTO } from "../../dtos";
 
 export interface FindByIdGarrisonUseCase {
-  findById(id: string): Promise<Garrison | null>;
+  findById(id: string): Promise<GarrisonOutputDTO | null>;
 }

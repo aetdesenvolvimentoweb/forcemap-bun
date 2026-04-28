@@ -1,5 +1,5 @@
-import { Garrison } from "../../entities";
+import { GarrisonOutputDTO } from "../../dtos";
 
 export interface ListAllGarrisonUseCase {
-  listAll(): Promise<Garrison[]>;
+  listAll(): Promise<GarrisonOutputDTO[]>;
 }
