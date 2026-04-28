@@ -1,3 +1,4 @@
+export * from "./aca.input.dto.sanitizer";
 export * from "./garrison.input.dto.sanitizer";
 export * from "./id.sanitizer";
 export * from "./military-rank.input.dto.sanitizer";

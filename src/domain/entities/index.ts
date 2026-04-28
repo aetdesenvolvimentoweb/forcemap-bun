@@ -1,3 +1,4 @@
+export * from "./aca.entity";
 export * from "./garrison.entity";
 export * from "./military-rank.entity";
 export * from "./military.entity";

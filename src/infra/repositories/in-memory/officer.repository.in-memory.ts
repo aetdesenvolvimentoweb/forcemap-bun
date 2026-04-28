@@ -11,9 +11,6 @@ export class OfficerRepositoryInMemory implements OfficerRepository {
   private items: Officer[] = [];
 
   constructor(private readonly militaryRepository: MilitaryRepository) {}
-  findByPeriod(_order: number): Promise<OfficerOutputDTO | null> {
-    throw new Error("Method not implemented.");
-  }
 
   private mapperOfficer = async (
     officer: Officer,
@@ -31,17 +28,17 @@ export class OfficerRepositoryInMemory implements OfficerRepository {
   };
 
   public create = async (data: OfficerInputDTO): Promise<void> => {
-    const militaryDTO = await this.militaryRepository.findById(data.militaryId);
+    const military = await this.militaryRepository.findById(data.militaryId);
     const entity: Officer = {
       ...data,
       id: crypto.randomUUID(),
-      military: militaryDTO
+      military: military
         ? {
-            id: militaryDTO.id,
-            militaryRankId: militaryDTO.militaryRank.id,
-            militaryRank: militaryDTO.militaryRank,
-            rg: militaryDTO.rg,
-            name: militaryDTO.name,
+            id: military.id,
+            militaryRankId: military.militaryRank.id,
+            militaryRank: military.militaryRank,
+            rg: military.rg,
+            name: military.name,
           }
         : undefined,
     };

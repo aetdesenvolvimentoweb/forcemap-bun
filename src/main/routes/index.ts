@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import acaRoutes from "./aca.routes";
 import authRoutes from "./auth.routes";
 import garrisonRoutes from "./garrison.routes";
 import healthDocs from "./health-docs.routes";
@@ -12,6 +13,7 @@ const routes = new Hono();
 
 routes.route("/", healthDocs);
 routes.route("/api/v1", authRoutes);
+routes.route("/api/v1/aca", acaRoutes);
 routes.route("/api/v1/garrison", garrisonRoutes);
 routes.route("/api/v1/military", militaryRoutes);
 routes.route("/api/v1/military-rank", militaryRankRoutes);

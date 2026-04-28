@@ -1,4 +1,4 @@
-import { Military } from "../../entities";
+import { Military, Vehicle } from "../../entities";
 import { WorkPeriod, WorkSchedule } from "../../enums";
 
 export type MilitaryInGarrisonOutputDTO = {
@@ -8,6 +8,6 @@ export type MilitaryInGarrisonOutputDTO = {
 };
 
 export type GarrisonOutputDTO = {
-  vehicleId: string;
+  vehicle: Vehicle;
   militaryInGarrison: MilitaryInGarrisonOutputDTO[];
 };

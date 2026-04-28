@@ -4,7 +4,11 @@ import {
   MilitaryRepository,
   OfficerRepository,
 } from "../../../domain/repositories";
-import { DuplicatedKeyError, EntityNotFoundError } from "../../errors";
+import {
+  BusinessRuleError,
+  DuplicatedKeyError,
+  EntityNotFoundError,
+} from "../../errors";
 import {
   IdValidatorProtocol,
   OfficerInputDTOValidatorProtocol,
@@ -83,6 +87,12 @@ export class OfficerInputDTOValidator implements OfficerInputDTOValidatorProtoco
 
     if (!military) {
       throw new EntityNotFoundError("Oficial");
+    }
+
+    if (military.militaryRank.order > 7) {
+      throw new BusinessRuleError(
+        "O militar deve ter patente igual ou superior a Aspirante a Oficial para essa função.",
+      );
     }
 
     this.validateWorkPeriodFormat(data.workPeriod);

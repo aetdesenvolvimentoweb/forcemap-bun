@@ -1,3 +1,4 @@
+export * from "./aca.repository.factory";
 export * from "./garrison.repository.factory";
 export * from "./military-rank.repository.factory";
 export * from "./military.repository.factory";

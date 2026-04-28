@@ -9,15 +9,16 @@ import { WorkPeriod } from "../../../domain/enums";
 import {
   GarrisonRepository,
   MilitaryRepository,
+  VehicleRepository,
 } from "../../../domain/repositories";
 
 export class GarrisonRepositoryInMemory implements GarrisonRepository {
   private items: Garrison[] = [];
 
-  constructor(private readonly militaryRepository: MilitaryRepository) {}
-  findByPeriod(order: number): Promise<GarrisonOutputDTO | null> {
-    throw new Error("Method not implemented.");
-  }
+  constructor(
+    private readonly militaryRepository: MilitaryRepository,
+    private readonly vehicleRepository: VehicleRepository,
+  ) {}
 
   private mapperGarrison = async (
     garrison: Garrison,
@@ -29,23 +30,50 @@ export class GarrisonRepositoryInMemory implements GarrisonRepository {
       throw new EntityNotFoundError("Guarnição");
     }
 
+    if (!garrison.vehicle) {
+      throw new EntityNotFoundError("Viatura");
+    }
+
     return {
-      vehicleId: garrison.vehicleId,
-      militaryInGarrison: garrison.militaryInGarrison.map(
-        (m) =>
-          ({
-            military: m.military,
-            workPeriod: m.workPeriod,
-            workSchedule: m.workSchedule,
-          }) as MilitaryInGarrisonOutputDTO,
-      ),
+      vehicle: garrison.vehicle,
+      militaryInGarrison: garrison.militaryInGarrison.map((m) => {
+        if (!m.military) {
+          throw new EntityNotFoundError("Militar");
+        }
+        return {
+          military: m.military,
+          workPeriod: m.workPeriod,
+          workSchedule: m.workSchedule,
+        } as MilitaryInGarrisonOutputDTO;
+      }),
     };
   };
 
   public create = async (data: GarrisonInputDTO): Promise<void> => {
+    const [allMilitary, vehicle] = await Promise.all([
+      this.militaryRepository.listAll(),
+      this.vehicleRepository.findById(data.vehicleId),
+    ]);
+
     const entity: Garrison = {
       ...data,
       id: crypto.randomUUID(),
+      vehicle: vehicle ?? undefined,
+      militaryInGarrison: data.militaryInGarrison.map((m) => {
+        const foundMilitary = allMilitary.find((mil) => mil.id === m.militaryId);
+        return {
+          ...m,
+          military: foundMilitary
+            ? {
+                id: foundMilitary.id,
+                militaryRankId: foundMilitary.militaryRank.id,
+                militaryRank: foundMilitary.militaryRank,
+                rg: foundMilitary.rg,
+                name: foundMilitary.name,
+              }
+            : undefined,
+        };
+      }),
     };
     this.items.push(entity);
   };
@@ -79,7 +107,7 @@ export class GarrisonRepositoryInMemory implements GarrisonRepository {
     if (!garrison) {
       return null;
     }
-    const garrisonMapped = this.mapperGarrison(garrison);
+    const garrisonMapped = await this.mapperGarrison(garrison);
     return garrisonMapped;
   };
 
