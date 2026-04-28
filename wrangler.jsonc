@@ -6,6 +6,12 @@
   "dev": {
     "port": 3333,
   },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+  },
   "vars": {
     "LOG_PRETTY": "true",
     "BUN_ENV": "production",
@@ -34,8 +40,4 @@
   // "ai": {
   //   "binding": "AI"
   // },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // }
 }
