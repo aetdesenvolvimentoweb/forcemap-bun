@@ -84,8 +84,26 @@ export class MilitaryRepositoryInMemory implements MilitaryRepository {
 
   public update = async (id: string, data: MilitaryInputDTO): Promise<void> => {
     const index = this.items.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      this.items[index] = { ...this.items[index], ...data };
+    if (index === -1) {
+      return;
     }
+
+    const militaryRank = await this.militaryRankRepository.findById(
+      data.militaryRankId,
+    );
+
+    if (!militaryRank) {
+      throw new EntityNotFoundError("Posto/Graduação");
+    }
+
+    this.items[index] = {
+      ...this.items[index],
+      ...data,
+      militaryRank: {
+        id: militaryRank.id,
+        abbreviation: militaryRank.abbreviation,
+        order: militaryRank.order,
+      },
+    };
   };
 }
