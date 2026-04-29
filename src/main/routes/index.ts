@@ -6,6 +6,7 @@ import healthDocs from "./health-docs.routes";
 import militaryRankRoutes from "./military-rank.routes";
 import militaryRoutes from "./military.routes";
 import officerRoutes from "./officer.routes";
+import telephonistRoutes from "./telephonist.routes";
 import userRoutes from "./user.routes";
 import vehicleRoutes from "./vehicle.routes";
 
@@ -18,6 +19,7 @@ routes.route("/api/v1/garrison", garrisonRoutes);
 routes.route("/api/v1/military", militaryRoutes);
 routes.route("/api/v1/military-rank", militaryRankRoutes);
 routes.route("/api/v1/officer", officerRoutes);
+routes.route("/api/v1/telephonist", telephonistRoutes);
 routes.route("/api/v1/user", userRoutes);
 routes.route("/api/v1/vehicle", vehicleRoutes);
 
