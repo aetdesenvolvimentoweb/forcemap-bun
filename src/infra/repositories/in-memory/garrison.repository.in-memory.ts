@@ -55,27 +55,38 @@ export class GarrisonRepositoryInMemory implements GarrisonRepository {
       this.vehicleRepository.findById(data.vehicleId),
     ]);
 
-    const entity: Garrison = {
+    if (!allMilitary || allMilitary.length === 0) {
+      throw new EntityNotFoundError("Militar");
+    }
+
+    if (!vehicle) {
+      throw new EntityNotFoundError("Viatura");
+    }
+
+    const garrison: Garrison = {
       ...data,
       id: crypto.randomUUID(),
-      vehicle: vehicle ?? undefined,
+      vehicle: vehicle,
       militaryInGarrison: data.militaryInGarrison.map((m) => {
-        const foundMilitary = allMilitary.find((mil) => mil.id === m.militaryId);
+        const foundMilitary = allMilitary.find(
+          (mil) => mil.id === m.militaryId,
+        );
+        if (!foundMilitary) {
+          throw new EntityNotFoundError("Militar");
+        }
         return {
           ...m,
-          military: foundMilitary
-            ? {
-                id: foundMilitary.id,
-                militaryRankId: foundMilitary.militaryRank.id,
-                militaryRank: foundMilitary.militaryRank,
-                rg: foundMilitary.rg,
-                name: foundMilitary.name,
-              }
-            : undefined,
+          military: {
+            id: foundMilitary.id,
+            militaryRankId: foundMilitary.militaryRank.id,
+            militaryRank: foundMilitary.militaryRank,
+            rg: foundMilitary.rg,
+            name: foundMilitary.name,
+          },
         };
       }),
     };
-    this.items.push(entity);
+    this.items.push(garrison);
   };
 
   public delete = async (id: string): Promise<void> => {

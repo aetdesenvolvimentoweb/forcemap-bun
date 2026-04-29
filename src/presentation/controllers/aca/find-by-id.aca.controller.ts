@@ -31,12 +31,12 @@ export class FindByIdACAController extends BaseController {
 
     const result = await this.executeWithErrorHandling(
       async () => {
-        const ACA = await findByIdACAService.findById(id);
+        const aca = await findByIdACAService.findById(id);
         this.logger.info("ACA encontrado com sucesso", {
           id,
-          found: !!ACA,
+          found: !!aca,
         });
-        return ok<ACAOutputDTO | null>(ACA);
+        return ok<ACAOutputDTO | null>(aca);
       },
       "Erro ao listar ACA",
       { id },

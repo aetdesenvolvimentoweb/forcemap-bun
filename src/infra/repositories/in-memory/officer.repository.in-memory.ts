@@ -29,20 +29,24 @@ export class OfficerRepositoryInMemory implements OfficerRepository {
 
   public create = async (data: OfficerInputDTO): Promise<void> => {
     const military = await this.militaryRepository.findById(data.militaryId);
-    const entity: Officer = {
+
+    if (!military || !military.id) {
+      throw new EntityNotFoundError("Oficial");
+    }
+
+    const officer: Officer = {
       ...data,
       id: crypto.randomUUID(),
-      military: military
-        ? {
-            id: military.id,
-            militaryRankId: military.militaryRank.id,
-            militaryRank: military.militaryRank,
-            rg: military.rg,
-            name: military.name,
-          }
-        : undefined,
+      military: {
+        id: military.id,
+        militaryRankId: military.militaryRank.id,
+        militaryRank: military.militaryRank,
+        rg: military.rg,
+        name: military.name,
+      },
     };
-    this.items.push(entity);
+
+    this.items.push(officer);
   };
 
   public delete = async (id: string): Promise<void> => {

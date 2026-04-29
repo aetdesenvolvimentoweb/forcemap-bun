@@ -16,28 +16,38 @@ export class MilitaryRepositoryInMemory implements MilitaryRepository {
   private mapperMilitary = async (
     military: Military,
   ): Promise<MilitaryOutputDTO> => {
-    const militaryRank = await this.militaryRankRepository.findById(
-      military.militaryRankId,
-    );
-
-    if (!militaryRank) {
+    if (!military.militaryRank) {
       throw new EntityNotFoundError("Posto/Graduação");
     }
 
     return {
       id: military.id,
-      militaryRank,
+      militaryRank: military.militaryRank,
       rg: military.rg,
       name: military.name,
     };
   };
 
   public create = async (data: MilitaryInputDTO): Promise<void> => {
-    const entity: Military = {
+    const militaryRank = await this.militaryRankRepository.findById(
+      data.militaryRankId,
+    );
+
+    if (!militaryRank) {
+      throw new EntityNotFoundError("Posto/Graduação");
+    }
+
+    const military: Military = {
       ...data,
       id: crypto.randomUUID(),
+      militaryRank: {
+        id: militaryRank.id,
+        abbreviation: militaryRank.abbreviation,
+        order: militaryRank.order,
+      },
     };
-    this.items.push(entity);
+
+    this.items.push(military);
   };
 
   public delete = async (id: string): Promise<void> => {
