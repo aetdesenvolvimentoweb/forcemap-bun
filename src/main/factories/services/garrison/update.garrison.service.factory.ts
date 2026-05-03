@@ -3,6 +3,7 @@ import {
   makeGarrisonRepository,
   makeMilitaryRankRepository,
   makeMilitaryRepository,
+  makeVehicleRepository,
 } from "../../repositories";
 import {
   makeGarrisonInputDTOSanitizer,
@@ -17,7 +18,11 @@ import {
 export const makeUpdateGarrisonService = (): UpdateGarrisonService => {
   const militaryRankRepository = makeMilitaryRankRepository();
   const militaryRepository = makeMilitaryRepository(militaryRankRepository);
-  const garrisonRepository = makeGarrisonRepository(militaryRepository);
+  const vehicleRepository = makeVehicleRepository();
+  const garrisonRepository = makeGarrisonRepository(
+    militaryRepository,
+    vehicleRepository,
+  );
 
   // Custom implementation for Update service due to different parameter names
   return new UpdateGarrisonService({

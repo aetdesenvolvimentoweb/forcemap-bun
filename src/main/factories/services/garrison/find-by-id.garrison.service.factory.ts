@@ -4,6 +4,7 @@ import {
   makeGarrisonRepository,
   makeMilitaryRankRepository,
   makeMilitaryRepository,
+  makeVehicleRepository,
 } from "../../repositories";
 import { makeIdSanitizer } from "../../sanitizers";
 import {
@@ -14,7 +15,11 @@ import {
 export const makeFindByIdGarrisonService = (): FindByIdGarrisonService => {
   const militaryRankRepository = makeMilitaryRankRepository();
   const militaryRepository = makeMilitaryRepository(militaryRankRepository);
-  const garrisonRepository = makeGarrisonRepository(militaryRepository);
+  const vehicleRepository = makeVehicleRepository();
+  const garrisonRepository = makeGarrisonRepository(
+    militaryRepository,
+    vehicleRepository,
+  );
 
   return GenericServiceFactory.findByIdService({
     ServiceClass: FindByIdGarrisonService,

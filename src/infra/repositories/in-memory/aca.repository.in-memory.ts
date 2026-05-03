@@ -95,8 +95,26 @@ export class ACARepositoryInMemory implements ACARepository {
 
   public update = async (id: string, data: ACAInputDTO): Promise<void> => {
     const index = this.items.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      this.items[index] = { ...this.items[index], ...data };
+    if (index === -1) {
+      return;
     }
+
+    const military = await this.militaryRepository.findById(data.militaryId);
+
+    if (!military || !military.id) {
+      throw new EntityNotFoundError("ACA");
+    }
+
+    this.items[index] = {
+      ...this.items[index],
+      ...data,
+      military: {
+        id: military.id,
+        militaryRankId: military.militaryRank.id,
+        militaryRank: military.militaryRank,
+        rg: military.rg,
+        name: military.name,
+      },
+    };
   };
 }

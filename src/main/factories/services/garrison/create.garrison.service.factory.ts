@@ -4,6 +4,7 @@ import {
   makeGarrisonRepository,
   makeMilitaryRankRepository,
   makeMilitaryRepository,
+  makeVehicleRepository,
 } from "../../repositories";
 import { makeGarrisonInputDTOSanitizer } from "../../sanitizers";
 import { makeGarrisonInputDTOValidator } from "../../validators";
@@ -11,7 +12,11 @@ import { makeGarrisonInputDTOValidator } from "../../validators";
 export const makeCreateGarrisonService = (): CreateGarrisonService => {
   const militaryRankRepository = makeMilitaryRankRepository();
   const militaryRepository = makeMilitaryRepository(militaryRankRepository);
-  const garrisonRepository = makeGarrisonRepository(militaryRepository);
+  const vehicleRepository = makeVehicleRepository();
+  const garrisonRepository = makeGarrisonRepository(
+    militaryRepository,
+    vehicleRepository,
+  );
 
   return GenericServiceFactory.createService({
     ServiceClass: CreateGarrisonService,

@@ -4,12 +4,17 @@ import {
   makeGarrisonRepository,
   makeMilitaryRankRepository,
   makeMilitaryRepository,
+  makeVehicleRepository,
 } from "../../repositories";
 
 export const makeListAllGarrisonService = (): ListAllGarrisonService => {
   const militaryRankRepository = makeMilitaryRankRepository();
   const militaryRepository = makeMilitaryRepository(militaryRankRepository);
-  const garrisonRepository = makeGarrisonRepository(militaryRepository);
+  const vehicleRepository = makeVehicleRepository();
+  const garrisonRepository = makeGarrisonRepository(
+    militaryRepository,
+    vehicleRepository,
+  );
 
   return GenericServiceFactory.listAllService({
     ServiceClass: ListAllGarrisonService,

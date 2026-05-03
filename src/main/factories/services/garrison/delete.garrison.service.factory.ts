@@ -4,6 +4,7 @@ import {
   makeGarrisonRepository,
   makeMilitaryRankRepository,
   makeMilitaryRepository,
+  makeVehicleRepository,
 } from "../../repositories";
 import { makeIdSanitizer } from "../../sanitizers";
 import {
@@ -15,7 +16,11 @@ export const makeDeleteGarrisonService = (): DeleteGarrisonService => {
   // Complex dependencies that need custom setup
   const militaryRankRepository = makeMilitaryRankRepository();
   const militaryRepository = makeMilitaryRepository(militaryRankRepository);
-  const garrisonRepository = makeGarrisonRepository(militaryRepository);
+  const vehicleRepository = makeVehicleRepository();
+  const garrisonRepository = makeGarrisonRepository(
+    militaryRepository,
+    vehicleRepository,
+  );
 
   return GenericServiceFactory.deleteService({
     ServiceClass: DeleteGarrisonService,

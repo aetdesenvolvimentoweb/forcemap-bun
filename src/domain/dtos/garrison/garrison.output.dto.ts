@@ -8,6 +8,7 @@ export type MilitaryInGarrisonOutputDTO = {
 };
 
 export type GarrisonOutputDTO = {
+  id: string;
   vehicle: Vehicle;
   militaryInGarrison: MilitaryInGarrisonOutputDTO[];
 };

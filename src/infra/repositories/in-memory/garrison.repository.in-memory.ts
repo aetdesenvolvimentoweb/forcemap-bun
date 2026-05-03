@@ -35,6 +35,7 @@ export class GarrisonRepositoryInMemory implements GarrisonRepository {
     }
 
     return {
+      id: garrison.id,
       vehicle: garrison.vehicle,
       militaryInGarrison: garrison.militaryInGarrison.map((m) => {
         if (!m.military) {

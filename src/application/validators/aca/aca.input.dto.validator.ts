@@ -88,7 +88,7 @@ export class ACAInputDTOValidator implements ACAInputDTOValidatorProtocol {
       throw new EntityNotFoundError("ACA");
     }
 
-    if (military.militaryRank.order > 7) {
+    if (military.militaryRank.order < 8) {
       throw new BusinessRuleError(
         "O militar deve ter patente igual ou inferior a Subtenente para essa função.",
       );
